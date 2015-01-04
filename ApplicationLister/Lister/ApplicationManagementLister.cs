@@ -38,7 +38,7 @@ namespace ApplicationLister.Lister
         {
             // Grab the item that begins with the key
             var property = appString.FirstOrDefault(x => x.StartsWith(propertyName));
-            
+            if(property == null) return string.Empty;
             // Remove the keyname and extra cruft from the string
             property = Regex.Replace(property, propertyName + @"=""", "");
             property = Regex.Replace(property, @"""", "");
