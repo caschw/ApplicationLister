@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ApplicationLister.Extensions;
 using ApplicationLister.Lister;
@@ -21,9 +22,16 @@ namespace ApplicationLister
             registryApps.AddRange(managementApps);
             registryApps = registryApps.RemoveDuplicateResults();
 
+            var path = @"C:\test\InstalledPrograms.txt";
+
+            if(!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+            
             // Output app list to console and file
             var i = 0;
-            using (var file = new System.IO.StreamWriter(@"C:\test\InstalledPrograms.txt"))
+            using (var file = new System.IO.StreamWriter(path))
             {
                 foreach (IDictionary<string, object> application in registryApps.OrderBy(x => (x as IDictionary<string, object>)["DisplayName"]))
                 {
